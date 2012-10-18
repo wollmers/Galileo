@@ -162,6 +162,7 @@ sub startup {
   $if_author->any( '/edit/:name' )->to('edit#edit_page');
   $if_author->websocket( '/store/page' )->to('edit#store_page');
   $if_author->websocket( '/store/menu' )->to('edit#store_menu');
+  $if_author->post( '/store/page' )->to('edit#store_page_ajax');
 
   my $if_admin = $r->under( sub {
     my $self = shift;

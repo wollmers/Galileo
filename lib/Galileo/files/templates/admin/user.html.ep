@@ -3,6 +3,7 @@
 % content_for banner => "Administer User: $name";
 
 %= content_for header => begin
+  %= javascript '/assets/jquery.gracefulWebSocket.js';
   %= javascript '/galileo-edit.js';
 %= end
 

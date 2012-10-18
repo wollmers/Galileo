@@ -49,6 +49,28 @@ sub store_page {
   });
 }
 
+sub store_page_ajax {
+  my $self = shift;
+  $self->on(message => sub {
+    my ($self, $message) = @_;
+    my $data = $json->decode( encode_utf8($message) );
+
+    my $schema = $self->schema;
+
+    unless($data->{title}) {
+      $self->render_json('Not saved! A title is required!');
+      return;
+    }
+    my $author = $schema->resultset('User')->single({name=>$self->session->{username}});
+    $data->{author_id} = $author->id;
+    $schema->resultset('Page')->update_or_create(
+      $data, {key => 'pages_name'},
+    );
+    $self->expire('main');
+    $self->render_json('Changes saved');
+  });
+}
+
 sub edit_menu {
   my $self = shift;
   my $name = 'main';
