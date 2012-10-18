@@ -1,2 +1,6 @@
 *.db
 *.conf
+
+*~
+._*
+.DS_Store
